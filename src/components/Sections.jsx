@@ -111,6 +111,11 @@ export function Programme() {
 export function Location() {
   return (
     <section id="location" className="sec">
+      <style>{`
+        #location .map { max-width: 700px; height: 300px; margin-left: auto; margin-right: auto; }
+        #location .map iframe { width: 100%; height: 100%; border: 0; }
+        @media (max-width: 700px) { #location .map { height: 240px; } }
+      `}</style>
       <Heading eyebrow="Location" title="Find us here" />
       <Reveal className="map">
         <iframe title="Map" src={c.mapEmbed} loading="lazy" referrerPolicy="no-referrer-when-downgrade" allowFullScreen />

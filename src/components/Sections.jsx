@@ -112,9 +112,11 @@ export function Location() {
   return (
     <section id="location" className="sec">
       <style>{`
-        #location .map { max-width: 700px; height: 300px; margin-left: auto; margin-right: auto; }
-        #location .map iframe { width: 100%; height: 100%; border: 0; }
-        @media (max-width: 700px) { #location .map { height: 240px; } }
+        html, body { max-width: 100%; overflow-x: hidden; }
+        #location { overflow-x: hidden; }
+        #location .map { box-sizing: border-box; width: 100%; min-width: 0; max-width: 700px; height: 300px; margin-left: auto; margin-right: auto; transform: none; }
+        #location .map iframe { display: block; width: 100%; max-width: 100%; height: 100%; border: 0; }
+        @media (max-width: 700px) { #location .map { width: calc(100% - 32px); height: 240px; } }
       `}</style>
       <Heading eyebrow="Location" title="Find us here" />
       <Reveal className="map">

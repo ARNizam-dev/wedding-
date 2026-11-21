@@ -119,6 +119,7 @@ export function Location() {
         @media (max-width: 700px) { #location .map { width: calc(100% - 32px); height: 240px; } }
       `}</style>
       <Heading eyebrow="Location" title="Find us here" />
+      <p className="serif center" style={{ marginBottom: "1rem" }}>Groom&apos;s residence</p>
       <Reveal className="map">
         <iframe title="Map" src={c.mapEmbed} loading="lazy" referrerPolicy="no-referrer-when-downgrade" allowFullScreen />
       </Reveal>
@@ -150,26 +151,32 @@ export function Party() {
 }
 
 export function Gallery() {
-  const items = c.gallery.length ? c.gallery : Array.from({ length: 5 }, () => null);
-  const [i, setI] = useState(0);
+  const items = c.gallery || [];
   const n = items.length;
+  const [i, setI] = useState(0);
   const [paused, setPaused] = useState(false);
   useEffect(() => {
-    if (paused) return;
+    if (paused || n < 2) return;
     const t = setInterval(() => setI((v) => (v + 1) % n), 4000);
     return () => clearInterval(t);
   }, [paused, n]);
   return (
     <section id="album" className="sec">
       <Heading eyebrow="The album" title="Our favourite moments" />
-      <div className="gallery" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
-        <button aria-label="Previous" onClick={() => setI((i - 1 + n) % n)}>‹</button>
-        <div className="frame" key={i}>
-          {items[i] ? <img src={items[i]} alt={`Moment ${i + 1}`} /> : <div className={`ph ph${i % 3}`}>Photo {i + 1}</div>}
-        </div>
-        <button aria-label="Next" onClick={() => setI((i + 1) % n)}>›</button>
-      </div>
-      <div className="center dotsnav">{items.map((_, k) => <i key={k} className={k === i ? "on" : ""} onClick={() => setI(k)} />)}</div>
+      {n === 0 ? (
+        <p className="serif center">Our photos will be added here soon.</p>
+      ) : (
+        <>
+          <div className="gallery" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
+            <button aria-label="Previous" onClick={() => setI((i - 1 + n) % n)}>‹</button>
+            <div className="frame" key={i}>
+              <img src={items[i]} alt={`Moment ${i + 1}`} />
+            </div>
+            <button aria-label="Next" onClick={() => setI((i + 1) % n)}>›</button>
+          </div>
+          <div className="center dotsnav">{items.map((_, k) => <i key={k} className={k === i ? "on" : ""} onClick={() => setI(k)} />)}</div>
+        </>
+      )}
     </section>
   );
 }

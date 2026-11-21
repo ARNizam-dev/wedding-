@@ -207,3 +207,22 @@ section[id]{scroll-margin-top:70px}
 @keyframes glow{to{filter:brightness(1.6)}}
 @keyframes siteIn{from{opacity:0;filter:blur(10px)}}
 @media (max-width:700px){.nav .brand{display:none}.nav{justify-content:center}.hero-in:before,.hero-in:after{display:none}}
+
+/* ===== Door theme: burgundy + rose-gold (matches the invitation card) ===== */
+.door-screen{background:radial-gradient(circle at 50% 30%,#7d2033 0,#571221 40%,#2c0710 100%)}
+.door-wrap{background:linear-gradient(135deg,#e8cbb4,#b88c70 45%,#e3c1a7 70%,#94694f);box-shadow:0 0 60px #000a}
+.door-panel{background:
+  radial-gradient(circle,#d3ae93 0 2px,transparent 3px) 0 0/34px 34px,
+  linear-gradient(90deg,#00000040,transparent 12%,transparent 88%,#00000050),
+  repeating-linear-gradient(90deg,#5b1221 0 9px,#68182a 9px 18px);
+  box-shadow:inset 0 0 0 10px #3a0912,inset 0 0 0 12px #c9a287}
+.door-panel:before{border-color:#c9a287;background:linear-gradient(#4b0e1aaa,#2a060daa)}
+.door-panel:after{background:linear-gradient(90deg,#edd2bd,#a8795c)}
+.door-panel.left{border-right-color:#1d0408}
+.door-card{color:#e8cdb8;border-color:#c9a287;background:linear-gradient(160deg,#5c1524f2,#34080ff2);box-shadow:0 10px 30px #0009,inset 0 0 0 4px #34080f,inset 0 0 0 5px #c9a28766}
+.door-card .arabic{color:#dcb89c}
+.door-card small{color:#d2b098}
+.door-card .eyebrow{color:#d6b196}
+.door-card h2{color:#f4ddcc}
+.door-card h2 em{color:#d6b196}
+.door-card .btn-green{background:linear-gradient(#edd2bd,#b88c70);color:#3a0912!important;border-color:#f6e3d3}

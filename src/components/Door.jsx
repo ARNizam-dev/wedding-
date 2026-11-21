@@ -9,7 +9,13 @@ export default function Door({ onOpen }) {
   };
   return (
     <div className={`door-screen ${open ? "open" : ""}`}>
+      <style>{`
+        .door-behind-img{position:absolute;inset:14px 14px 0;border-radius:50% 50% 0 0/16% 16% 0 0;background:#3a0a14 center/cover no-repeat;box-shadow:inset 0 0 40px #000b}
+        .door-panel{z-index:1}
+      `}</style>
       <div className="door-wrap">
+        {/* the invitation card waits behind the doors */}
+        <div className="door-behind-img" style={{ backgroundImage: `url(${c.cardImage || "/invitation-card.jpg"})` }} />
         <div className="door-panel left" /><div className="door-panel right" />
         <div className="door-arch" />
       </div>

@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import Intro from "./components/Intro.jsx";
 import Door from "./components/Door.jsx";
-import { Hero, Invitation, Story, Programme, Location, Party, Faq, Rsvp, Footer } from "./components/Sections.jsx";
+import { Hero, Invitation, Story, Programme, Location, Party, Faq, Footer } from "./components/Sections.jsx";
 import { config as c } from "./data/config.js";
 
-const LINKS = [["invite", "Invitation"], ["story", "Story"], ["programme", "Programme"], ["location", "Venue"], ["family", "Family"], ["rsvp", "RSVP"]];
+const LINKS = [["invite", "Invitation"], ["story", "Story"], ["programme", "Programme"], ["location", "Venue"], ["family", "Family"]];
 
 function Nav() {
   const [show, setShow] = useState(false);
@@ -28,7 +28,7 @@ export default function App() {
   const audio = useRef(null);
 
   const startMusic = () => { audio.current?.play().catch(() => {}); };
-  const openDoors = () => { startMusic(); setTimeout(() => setStage("site"), 1500); };
+  const openDoors = () => { startMusic(); setTimeout(() => setStage("site"), 3600); };
   const toggle = () => {
     if (!audio.current) return;
     muted ? audio.current.play() : audio.current.pause();
@@ -60,7 +60,7 @@ export default function App() {
           <div className="progress" />
           <Nav />
           <main className="site">
-            <Hero /><Invitation /><Story /><Programme /><Location /><Party /><Faq /><Rsvp /><Footer />
+            <Hero /><Invitation /><Story /><Programme /><Location /><Party /><Faq /><Footer />
           </main>
         </>
       )}

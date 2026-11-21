@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import Avatar from "./Avatar.jsx";
 import { config as c } from "../data/config.js";
 
 const ZAHRA_X = 14;  // % from left (she waits here)
@@ -243,15 +242,19 @@ export default function Intro({ onDone }) {
         .ps .lamp.g.on{background:#32d74b;box-shadow:0 0 9px 3px #32d74b99}
         .ps .pole{height:62px;width:5px}
 
-        .fig:before{content:"";position:absolute;left:50%;top:148px;width:60px;height:10px;margin-left:-30px;border-radius:50%;background:radial-gradient(#0008,transparent 70%)}
+        .fig{top:calc(26vh - 22px)}
+        .cut{display:block;margin:0 auto;width:auto;pointer-events:none;user-select:none;filter:drop-shadow(0 2px 4px #0005)}
+        .cut.cutn{height:96px}
+        .cut.cutz{height:106px;margin-top:-10px;transform:scaleX(-1)}
+        .fig:before{content:"";position:absolute;left:50%;top:172px;width:60px;height:10px;margin-left:-30px;border-radius:50%;background:radial-gradient(#0008,transparent 70%)}
         .fig.bikefig:before{width:120px;margin-left:-60px}
         .stick{overflow:visible}
         .stick.bike{width:130px;margin:-6px 0 0}
         .fig.bikefig{width:130px;margin-left:-65px}
         .rose{position:absolute;font-size:1.6rem;line-height:1;pointer-events:none}
-        .rose.n{left:8px;top:68px}
-        .rose.z{left:66px;top:66px;animation:rosepop .7s}
-        .fh{position:absolute;top:56px;color:#e0302f;font-size:1.3rem;opacity:0;animation:floatup 2.4s ease-out forwards;animation-delay:var(--d,0s);pointer-events:none}
+        .rose.n{left:8px;top:90px}
+        .rose.z{left:66px;top:88px;animation:rosepop .7s}
+        .fh{position:absolute;top:80px;color:#e0302f;font-size:1.3rem;opacity:0;animation:floatup 2.4s ease-out forwards;animation-delay:var(--d,0s);pointer-events:none}
         @keyframes rosepop{from{transform:scale(.2) rotate(-35deg)}60%{transform:scale(1.5) rotate(10deg)}}
         @keyframes floatup{0%{opacity:0;transform:translateY(0) scale(.5)}20%{opacity:1}100%{opacity:0;transform:translateY(-120px) scale(1.2)}}
       `}</style>
@@ -301,7 +304,7 @@ export default function Intro({ onDone }) {
 
       {/* Zahra waits */}
       <div className="fig" style={{ left: `${ZAHRA_X}%` }}>
-        <Avatar photo={c.bride.photo} name={c.bride.name} size={74} className="sticker" />
+        <img className="cut cutz" src="/zahra-head.png" alt={c.bride.name} draggable="false" />
         <Stick><path d={found ? "M30 20 L66 16" : "M30 20 L52 30"} /></Stick>
         {gave && <span className="rose z">🌹</span>}
         {gave && <span className="heart">❤</span>}
@@ -315,7 +318,7 @@ export default function Intro({ onDone }) {
         className="fig bikefig"
         style={{ left: `${x}%`, transition: found ? `left ${dur}s ease-in-out` : "left .12s linear" }}
       >
-        <Avatar photo={c.groom.photo} name={c.groom.name} size={74} className="sticker" />
+        <img className="cut cutn" src="/nihan-head.png" alt={c.groom.name} draggable="false" />
         <Bike a={a} giving={found} />
         {!gave && <span className="rose n">🌹</span>}
       </div>

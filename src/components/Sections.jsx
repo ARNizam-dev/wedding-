@@ -30,18 +30,31 @@ const Heading = ({ eyebrow, title }) => (
 );
 
 export function Hero() {
+  // auto-scroll to the invitation after a few seconds (stops if the visitor scrolls or touches the page)
+  useEffect(() => {
+    const events = ["wheel", "touchstart", "keydown", "pointerdown"];
+    const t = setTimeout(() => {
+      document.getElementById("invite")?.scrollIntoView({ behavior: "smooth" });
+      events.forEach((e) => window.removeEventListener(e, stop));
+    }, 4000);
+    function stop() {
+      clearTimeout(t);
+      events.forEach((e) => window.removeEventListener(e, stop));
+    }
+    events.forEach((e) => window.addEventListener(e, stop, { passive: true }));
+    return () => { clearTimeout(t); events.forEach((e) => window.removeEventListener(e, stop)); };
+  }, []);
+
   return (
     <header className="hero card-hero" id="top">
       <style>{`
-        .card-hero{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.5rem 0 4.5rem;min-height:100vh;background:#2c0509}
+        .card-hero{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.5rem 0;min-height:100vh;background:#2c0509}
         .card-img{display:block;width:min(100%,560px);height:auto;box-shadow:0 20px 60px #0008}
-        .card-hero .scroll{position:static;margin-top:1.4rem;flex:none}
       `}</style>
       <div className="hero-bg" style={{ background: "radial-gradient(circle at 70% 20%,#6b1a2c,#2c0509 70%) center/cover" }} />
       <Petals />
       {sparks.map((p, i) => <i key={i} className="spark" style={{ left: `${p.l}%`, top: `${p.t}%`, animationDelay: `${p.d}s`, width: p.s, height: p.s }} />)}
       <img className="card-img up" style={D(0.3)} src={c.cardImage || "/invitation-card.jpg"} alt={`Wedding invitation of ${c.groom.name} and ${c.bride.name}`} />
-      <a className="scroll" href="#invite" aria-label="Scroll down">↓</a>
     </header>
   );
 }
@@ -103,22 +116,53 @@ export function Programme() {
   );
 }
 
+// Paste each venue's exact Google Maps link in `link`.
+// To also show a small map, set `embed` to: https://www.google.com/maps?q=LAT,LNG&z=16&output=embed
+const VENUES = [
+  {
+    tag: "Nikah · 11 AM",
+    name: "Bride's residence",
+    place: "Baithul Marjan",
+    link: "https://www.google.com/maps/search/?api=1&query=Baithul+Marjan",
+    embed: "",
+  },
+  {
+    tag: "Lunch",
+    name: "Groom's residence",
+    place: "",
+    link: "https://share.google/HgAtzJiy67I51p1Rz",
+    embed: "",
+  },
+];
+
 export function Location() {
   return (
     <section id="location" className="sec">
       <style>{`
         html, body { max-width: 100%; overflow-x: hidden; }
         #location { overflow-x: hidden; }
-        #location .map { box-sizing: border-box; width: 100%; min-width: 0; max-width: 700px; height: 300px; margin-left: auto; margin-right: auto; transform: none; }
-        #location .map iframe { display: block; width: 100%; max-width: 100%; height: 100%; border: 0; }
-        @media (max-width: 700px) { #location .map { width: calc(100% - 32px); height: 240px; } }
+        .venues { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.2rem; }
+        .venue h3 { font-family: "Fraunces", serif; font-weight: 500; font-size: 1.5rem; margin: .3rem 0; }
+        .venue .place { font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: #8a6a70; }
+        .venue .map { box-sizing: border-box; width: 100%; max-width: 100%; height: 220px; min-height: 0; aspect-ratio: auto; margin: 1rem 0 0; }
+        .venue .map iframe { display: block; width: 100%; height: 100%; border: 0; }
       `}</style>
       <Heading eyebrow="Location" title="Find us here" />
-      <p className="serif center" style={{ marginBottom: "1rem" }}>Groom&apos;s residence</p>
-      <Reveal className="map">
-        <iframe title="Map" src={c.mapEmbed} loading="lazy" referrerPolicy="no-referrer-when-downgrade" allowFullScreen />
-      </Reveal>
-      <div className="center"><a className="btn-ghost" href={c.mapLink} target="_blank" rel="noreferrer">📍 Get directions</a></div>
+      <div className="venues">
+        {VENUES.map((v, i) => (
+          <Reveal key={v.name} delay={i * 120} className="card venue center">
+            <span className="eyebrow">{v.tag}</span>
+            <h3>{v.name}</h3>
+            {v.place && <p className="place">{v.place}</p>}
+            {v.embed && (
+              <div className="map">
+                <iframe title={v.name} src={v.embed} loading="lazy" referrerPolicy="no-referrer-when-downgrade" allowFullScreen />
+              </div>
+            )}
+            <a className="btn-ghost" href={v.link} target="_blank" rel="noreferrer">📍 Get directions</a>
+          </Reveal>
+        ))}
+      </div>
     </section>
   );
 }
@@ -163,38 +207,6 @@ export function Faq() {
           </div>
         ))}
       </div>
-    </section>
-  );
-}
-
-export function Rsvp() {
-  const [f, setF] = useState({ name: "", guests: "1", attend: "yes", msg: "" });
-  const [sent, setSent] = useState(false);
-  const set = (k) => (e) => setF({ ...f, [k]: e.target.value });
-  const submit = (e) => {
-    e.preventDefault();
-    const text = `${f.attend === "yes" ? "✅ Attending" : "❌ Unable to attend"}\nName: ${f.name}\nGuests: ${f.guests}\n${f.msg ? `Message: ${f.msg}` : ""}`;
-    window.open(`https://wa.me/${c.rsvpWhatsApp}?text=${encodeURIComponent(text)}`, "_blank");
-    setSent(true);
-  };
-  return (
-    <section id="rsvp" className="rsvp">
-      <span className="eyebrow light">• Kindly respond •</span>
-      <form className="card form" onSubmit={submit}>
-        {sent ? (
-          <p className="serif center">Thank you, {f.name}! Your response is on its way. 🤍</p>
-        ) : (
-          <>
-            <input required placeholder="Your name" value={f.name} onChange={set("name")} />
-            <div className="row">
-              <select value={f.attend} onChange={set("attend")}><option value="yes">I'll be there</option><option value="no">Can't make it</option></select>
-              <select value={f.guests} onChange={set("guests")}>{[1,2,3,4,5,6].map((n) => <option key={n} value={n}>{n} guest{n > 1 ? "s" : ""}</option>)}</select>
-            </div>
-            <textarea rows="3" placeholder="A message for the couple (optional)" value={f.msg} onChange={set("msg")} />
-            <button className="btn-green wide">Send message</button>
-          </>
-        )}
-      </form>
     </section>
   );
 }

@@ -226,3 +226,45 @@ section[id]{scroll-margin-top:70px}
 .door-card h2{color:#f4ddcc}
 .door-card h2 em{color:#d6b196}
 .door-card .btn-green{background:linear-gradient(#edd2bd,#b88c70);color:#3a0912!important;border-color:#f6e3d3}
+
+/* ================= BURGUNDY THEME (whole site) ================= */
+:root{--green:#ecd2bf;--green-d:#2c0509;--sage:#c9a287;--cream:#3a0b16;--paper:#4a1220;--gold:#c9a287;--ink:#ead3c3}
+body{background-color:#3a0b16;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cpath d='M30 0l8 22 22 8-22 8-8 22-8-22L0 30l22-8z' fill='none' stroke='%23c9a287' stroke-opacity='.07'/%3E%3C/svg%3E"),linear-gradient(#5a1020,#3b0c17);background-size:60px 60px,100% 100%;color:var(--ink)}
+::selection{background:#c9a287;color:#2c0509}
+.arabic{color:#dcb89c}
+.meta.dark{color:#cfb29c}
+.story,.event p,.ans p{color:#e3cbb9}
+.event small,.side,.person small,.countdown span{color:#c9a99a}
+.names{color:#f0d9c8}
+.card{box-shadow:0 12px 36px #0006;border-top-color:#c9a287}
+.card:hover{box-shadow:0 22px 50px #000a}
+.card:before{border-color:#c9a28755}
+.event{border-left-color:#c9a287}.event.gold{border-left-color:#8a5a63}
+.event .no{background:linear-gradient(#edd2bd,#b88c70);-webkit-background-clip:text;background-clip:text;color:transparent}
+.dots{background:radial-gradient(circle,#c9a287 2px,transparent 2.5px) 0 0/10px 6px repeat-x}
+.rule{background:linear-gradient(90deg,#8a5a63 33%,#ecd2bf 33% 66%,#8a5a63 66%)}
+.countdown{border-top-color:#c9a28755}
+.countdown div{background:#3a0b16;border-color:#8a5a6366;box-shadow:0 4px 14px #0005}
+.countdown b{color:#ecd2bf}
+.person .avatar{border-color:#c9a287;box-shadow:0 0 0 2px #8a5a63,0 12px 28px #0007}
+.faq-i{background:var(--paper);border-color:#8a5a6366}
+.faq-i button{color:var(--ink)}
+.faq-i button span{color:#c9a287;border-color:#c9a287}
+.form input,.form select,.form textarea{background:#3a0b16;color:#ead3c3;border:1px solid #8a5a63}
+.form ::placeholder{color:#b99aa0}
+.form select option{background:#3a0b16;color:#ead3c3}
+.btn-green{background:linear-gradient(#edd2bd,#b88c70);color:#3a0912!important;border-color:#d9b9a3}
+.btn-ghost{background:#4a1220;border-color:#8a5a63;color:#ecd2bf}
+.btn-ghost:hover{background:#c9a287;color:#2c0509}
+.rsvp{background:linear-gradient(#3a0b16cc,#2c0509e6),repeating-linear-gradient(45deg,#4a0f1c 0 20px,#3a0b16 20px 40px)}
+.footer{background:#2c0509;color:#ead3c3}
+.footer small{color:#d2b098}
+.nav{background:#2c0509ee;border-bottom-color:#c9a28755}
+.nav .brand{color:#f0d9c8}
+.nav .links a{color:#dcc0ab}
+.nav .links a:after{background:#c9a287}
+.progress{background:linear-gradient(90deg,#edd2bd,#b88c70)}
+.music{background:#4a1220e6;color:#ecd2bf}
+.spark{background:#f2d3bf;box-shadow:0 0 10px 2px #e0b8a0}
+.hero-bg{background:radial-gradient(circle at 70% 20%,#6b1a2c,#2c0509 70%) center/cover}
+.hero .lead,.lineage p{color:#ecd2bf}

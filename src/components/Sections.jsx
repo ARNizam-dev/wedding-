@@ -4,6 +4,7 @@ import Petals from "./Petals.jsx";
 import Reveal from "./Reveal.jsx";
 import { config as c } from "../data/config.js";
 
+
 const D = (sec) => ({ "--d": `${sec}s` });
 const sparks = Array.from({ length: 26 }, (_, i) => ({ l: (i * 41) % 100, t: (i * 23 + 7) % 100, d: (i * 0.7) % 6, s: 2 + (i % 3) }));
 
@@ -30,22 +31,16 @@ const Heading = ({ eyebrow, title }) => (
 
 export function Hero() {
   return (
-    <header className="hero" id="top">
-      <div className="hero-bg" style={c.heroImage ? { backgroundImage: `url(${c.heroImage})` } : undefined} />
-      <div className="hero-shade" />
+    <header className="hero card-hero" id="top">
+      <style>{`
+        .card-hero{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.5rem 0 4.5rem;min-height:100vh;background:#2c0509}
+        .card-img{display:block;width:min(100%,560px);height:auto;box-shadow:0 20px 60px #0008}
+        .card-hero .scroll{position:static;margin-top:1.4rem;flex:none}
+      `}</style>
+      <div className="hero-bg" style={{ background: "radial-gradient(circle at 70% 20%,#6b1a2c,#2c0509 70%) center/cover" }} />
       <Petals />
       {sparks.map((p, i) => <i key={i} className="spark" style={{ left: `${p.l}%`, top: `${p.t}%`, animationDelay: `${p.d}s`, width: p.s, height: p.s }} />)}
-      <div className="hero-in">
-        <div className="arabic gold up" style={D(0.2)}>{c.bismillah}</div>
-        <span className="eyebrow light up" style={D(0.5)}>• Wedding Invitation •</span>
-        <p className="lead up" style={D(0.8)}>With gratitude to Allah and the blessings of our families<br />request the honour of your presence at the Wedding of</p>
-        <h1 className="up" style={D(1.1)}>{c.groom.name}</h1>
-        <div className="lineage up" style={D(1.25)}>{c.groom.lineage.map((l) => <p key={l}>{l}</p>)}</div>
-        <div className="rings up" style={D(1.4)}><span />&amp;<span /></div>
-        <h1 className="up" style={D(1.7)}>{c.bride.name}</h1>
-        <div className="lineage up" style={D(1.85)}>{c.bride.lineage.map((l) => <p key={l}>{l}</p>)}</div>
-        <p className="meta up" style={D(2.1)}>{c.dateText.toUpperCase()} · {c.hijri}<br />{c.venue.toUpperCase()}</p>
-      </div>
+      <img className="card-img up" style={D(0.3)} src={c.cardImage || "/invitation-card.jpg"} alt={`Wedding invitation of ${c.groom.name} and ${c.bride.name}`} />
       <a className="scroll" href="#invite" aria-label="Scroll down">↓</a>
     </header>
   );
@@ -150,35 +145,9 @@ export function Party() {
   );
 }
 
+// Album section removed (kept as an empty component so App.jsx still imports cleanly)
 export function Gallery() {
-  const items = c.gallery || [];
-  const n = items.length;
-  const [i, setI] = useState(0);
-  const [paused, setPaused] = useState(false);
-  useEffect(() => {
-    if (paused || n < 2) return;
-    const t = setInterval(() => setI((v) => (v + 1) % n), 4000);
-    return () => clearInterval(t);
-  }, [paused, n]);
-  return (
-    <section id="album" className="sec">
-      <Heading eyebrow="The album" title="Our favourite moments" />
-      {n === 0 ? (
-        <p className="serif center">Our photos will be added here soon.</p>
-      ) : (
-        <>
-          <div className="gallery" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
-            <button aria-label="Previous" onClick={() => setI((i - 1 + n) % n)}>‹</button>
-            <div className="frame" key={i}>
-              <img src={items[i]} alt={`Moment ${i + 1}`} />
-            </div>
-            <button aria-label="Next" onClick={() => setI((i + 1) % n)}>›</button>
-          </div>
-          <div className="center dotsnav">{items.map((_, k) => <i key={k} className={k === i ? "on" : ""} onClick={() => setI(k)} />)}</div>
-        </>
-      )}
-    </section>
-  );
+  return null;
 }
 
 export function Faq() {

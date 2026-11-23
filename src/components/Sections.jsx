@@ -129,7 +129,7 @@ const VENUES = [
   {
     tag: "Lunch",
     name: "Groom's residence",
-    place: "",
+    place: "Shamz",
     link: "https://share.google/HgAtzJiy67I51p1Rz",
     embed: "",
   },

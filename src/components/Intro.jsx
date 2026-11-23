@@ -274,7 +274,7 @@ export default function Intro({ onDone }) {
       `}</style>
 
       <h1 className={`scribble ${found ? "found" : ""}`}>{found ? c.introDoneTitle : c.introTitle}</h1>
-      <p className="scribble-sub">{found ? c.introDoneSub : c.introSub}</p>
+      <p className="scribble-sub">{found ? c.introDoneSub : "a flower for her…"}</p>
 
       {/* sky + city */}
       <div className="sun" />

@@ -5,9 +5,9 @@ export const config = {
   bride: { name: "Zahra", short: "Zahra", photo: "", lineage: ["D/O Mr. Musthafa Paratheentavida & Mrs. Safoora Puthanveettil"] },
 
   introTitle: "Help Nihan reach Zahra",
-  introSub: "a flower for him…",
+  introSub: "a flower for her…",
   introDoneTitle: "Found each other!",
-  introDoneSub: "a flower for him, a heart for her",
+  introDoneSub: "a flower for her, a heart for him",
 
   hashtag: "#NihanZahra",
   date: "2026-12-27T11:00:00+05:30",

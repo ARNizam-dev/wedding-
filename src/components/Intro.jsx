@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { config as c } from "../data/config.js";
 
-const ZAHRA_X = 14;  // % from left (she waits here)
+const ZAHRA_X = 17;  // % from left (she waits here)
 const START_X = 78;  // % from left (Nihan starts here)
 const GAP_PX = 80;   // distance between them when he stops
 
@@ -129,10 +129,18 @@ export default function Intro({ onDone }) {
   const [moved, setMoved] = useState(false);
   const [dur, setDur] = useState(0.7);
   const [a, setA] = useState(0);
+  const [w, setW] = useState(400);
   const stage = useRef(null);
   const timers = useRef([]);
   const idle = useRef(null);
   const started = useRef(false);
+
+  useEffect(() => {
+    const f = () => setW((stage.current && stage.current.offsetWidth) || 400);
+    f();
+    window.addEventListener("resize", f);
+    return () => window.removeEventListener("resize", f);
+  }, []);
 
   // spin wheels + pedal while riding
   useEffect(() => {
@@ -242,19 +250,25 @@ export default function Intro({ onDone }) {
         .ps .lamp.g.on{background:#32d74b;box-shadow:0 0 9px 3px #32d74b99}
         .ps .pole{height:62px;width:5px}
 
-        .fig{top:calc(26vh - 22px)}
+        .fig{top:calc(26vh - 26px)}
         .cut{display:block;margin:0 auto;width:auto;pointer-events:none;user-select:none;filter:drop-shadow(0 2px 4px #0005)}
-        .cut.cutn{height:96px}
-        .cut.cutz{height:106px;margin-top:-10px;transform:scaleX(-1)}
-        .fig:before{content:"";position:absolute;left:50%;top:172px;width:60px;height:10px;margin-left:-30px;border-radius:50%;background:radial-gradient(#0008,transparent 70%)}
+        .cut.cutn{height:100px}
+        .cut.cutz{height:110px;margin-top:-10px;transform:scaleX(-1)}
+        .fig:before{content:"";position:absolute;left:50%;top:176px;width:60px;height:10px;margin-left:-30px;border-radius:50%;background:radial-gradient(#0008,transparent 70%)}
         .fig.bikefig:before{width:120px;margin-left:-60px}
         .stick{overflow:visible}
         .stick.bike{width:130px;margin:-6px 0 0}
         .fig.bikefig{width:130px;margin-left:-65px}
         .rose{position:absolute;font-size:1.6rem;line-height:1;pointer-events:none}
-        .rose.n{left:8px;top:90px}
-        .rose.z{left:66px;top:88px;animation:rosepop .7s}
-        .fh{position:absolute;top:80px;color:#e0302f;font-size:1.3rem;opacity:0;animation:floatup 2.4s ease-out forwards;animation-delay:var(--d,0s);pointer-events:none}
+        .rose.n{left:8px;top:94px}
+        .rose.z{left:66px;top:92px;animation:rosepop .7s}
+        .fh{position:absolute;top:84px;color:#e0302f;font-size:1.3rem;opacity:0;animation:floatup 2.4s ease-out forwards;animation-delay:var(--d,0s);pointer-events:none}
+        .cut{filter:drop-shadow(0 3px 5px #0004)}
+        .ring{position:absolute;left:-14px;top:-14px;width:118px;height:118px;border:2.5px dashed #e07a6e;border-radius:50%;pointer-events:none;animation:ringpulse 1.8s ease-in-out infinite}
+        .dropme{position:absolute;left:-8px;top:-40px;font-family:"Caveat",cursive;font-size:1.45rem;font-weight:700;color:#d9534f;transform:rotate(-9deg);white-space:nowrap;pointer-events:none}
+        @keyframes ringpulse{50%{transform:scale(1.07);opacity:.65}}
+        .nametag{position:absolute;left:50%;top:190px;transform:translateX(-50%);font-family:"Caveat",cursive;font-size:1.4rem;line-height:1.3;color:#2b2f45;background:#fffdf3;padding:0 12px;border-radius:12px;box-shadow:0 2px 6px #0003;white-space:nowrap;pointer-events:none}
+        .hintarrow{position:absolute;left:0;top:calc(26vh - 70px);overflow:visible;pointer-events:none;z-index:4;transition:opacity .5s}
         @keyframes rosepop{from{transform:scale(.2) rotate(-35deg)}60%{transform:scale(1.5) rotate(10deg)}}
         @keyframes floatup{0%{opacity:0;transform:translateY(0) scale(.5)}20%{opacity:1}100%{opacity:0;transform:translateY(-120px) scale(1.2)}}
       `}</style>
@@ -302,10 +316,30 @@ export default function Intro({ onDone }) {
         <div className="pole" />
       </div>
 
+      {/* dotted hint arrow: from Nihan to Zahra */}
+      {(() => {
+        const nx = (START_X / 100) * w - 56, ny = 70;
+        const ex = (ZAHRA_X / 100) * w + 70, ey = 60;
+        const cx = (nx + ex) / 2, cy = 4;
+        const ang = Math.atan2(ey - cy, ex - cx);
+        const hd = (da) => `${ex - 13 * Math.cos(ang + da)} ${ey - 13 * Math.sin(ang + da)}`;
+        return (
+          <svg className="hintarrow" width={w} height="130" viewBox={`0 0 ${w} 130`} style={{ opacity: moved ? 0 : 1 }} aria-hidden="true">
+            <g fill="none" stroke="#6f6f6f" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round">
+              <path d={`M${nx} ${ny} Q${cx} ${cy} ${ex} ${ey}`} strokeDasharray="1 9" />
+              <path d={`M${hd(0.5)} L${ex} ${ey} L${hd(-0.5)}`} />
+            </g>
+          </svg>
+        );
+      })()}
+
       {/* Zahra waits */}
       <div className="fig" style={{ left: `${ZAHRA_X}%` }}>
         <img className="cut cutz" src="/zahra-head.png" alt={c.bride.name} draggable="false" />
         <Stick><path d={found ? "M30 20 L66 16" : "M30 20 L52 30"} /></Stick>
+        {!found && <i className="ring" />}
+        {!found && <b className="dropme">drop here</b>}
+        <span className="nametag">{c.bride.short || c.bride.name}</span>
         {gave && <span className="rose z">🌹</span>}
         {gave && <span className="heart">❤</span>}
         {gave && [0, 1, 2, 3, 4, 5].map((i) => (
@@ -320,6 +354,7 @@ export default function Intro({ onDone }) {
       >
         <img className="cut cutn" src="/nihan-head.png" alt={c.groom.name} draggable="false" />
         <Bike a={a} giving={found} />
+        <span className="nametag">{c.groom.short || c.groom.name}</span>
         {!gave && <span className="rose n">🌹</span>}
       </div>
 

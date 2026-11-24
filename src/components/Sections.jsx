@@ -130,7 +130,7 @@ const VENUES = [
     tag: "Lunch",
     name: "Groom's residence",
     place: "Shamz",
-    link: "https://share.google/HgAtzJiy67I51p1Rz",
+    link: "https://maps.app.goo.gl/RQh5Q7EC6SBtRUoeA?g_st=ic",
     embed: "",
   },
 ];
